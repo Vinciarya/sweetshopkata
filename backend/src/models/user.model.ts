@@ -32,3 +32,19 @@ export const createUserTable = async () => {
     throw error;
   }
 };
+
+export const createUser = async (user: IUser): Promise<IUser> => {
+  const { username, password, role } = user;
+  const text = 'INSERT INTO users(username, password, role) VALUES($1, $2, $3) RETURNING *';
+  const values = [username, password, role];
+
+  const res = await query(text, values);
+  return res.rows[0];
+};
+
+export const findUserByUsername = async (username: string): Promise<IUser | null> => {
+  const text = 'SELECT * FROM users WHERE username = $1';
+  const values = [username];
+  const res = await query(text, values);
+  return res.rows.length > 0 ? res.rows[0] : null;
+};

@@ -3,6 +3,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 // Import the function to prepare the place where user information is stored
 import { createUserTable } from './models/user.model';
+import authRoutes from './routes/auth.routes';
 
 // Load settings from the configuration file (like passwords and addresses)
 dotenv.config();
@@ -11,6 +12,12 @@ dotenv.config();
 export const app = express();
 // Decide which "door" (port) the website will open on. If not specified, use door 3000.
 const port = process.env.APP_PORT || 3000;
+
+// Middleware to parse JSON bodies
+app.use(express.json());
+
+// Register Routes
+app.use('/api/auth', authRoutes);
 
 // Function to start the website server
 const startServer = async () => {
