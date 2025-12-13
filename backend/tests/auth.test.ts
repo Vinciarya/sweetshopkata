@@ -1,3 +1,6 @@
+// TDD PHASE: RED
+// This test is expected to fail because the registration endpoint is not implemented yet.
+
 import request from 'supertest';
 import { app } from '../src/index';
 
