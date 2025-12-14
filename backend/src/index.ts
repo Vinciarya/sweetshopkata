@@ -6,7 +6,7 @@ import { app } from './app';
 dotenv.config();
 
 // Decide which "door" (port) the website will open on. If not specified, use door 3000.
-const port = process.env.APP_PORT || 3000;
+const port = process.env.PORT || 3000;
 
 // Function to start the website server
 const startServer = async () => {
