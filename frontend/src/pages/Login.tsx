@@ -9,6 +9,12 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  React.useEffect(() => {
+    if (localStorage.getItem('token')) {
+      navigate('/', { replace: true });
+    }
+  }, [navigate]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(''); // Clear previous errors
@@ -16,7 +22,7 @@ const Login = () => {
       const data = await login({ username, password });
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user)); // Save user info
-      navigate('/');
+      navigate('/', { replace: true });
     } catch (err: unknown) {
         if (isAxiosError(err)) {
             console.error("Login failed", err.response?.data || err.message);

@@ -17,7 +17,7 @@ const Register: React.FC = () => {
       await api.post('/auth/register', { username, password });
       setMessage('Registration successful! Redirecting to login...');
       setTimeout(() => {
-        navigate('/login');
+        navigate('/login', { replace: true });
       }, 1500);
     } catch (error: unknown) {
       if (isAxiosError(error)) {
@@ -32,17 +32,17 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
-      <div className="w-96 p-8 bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl transition-all duration-300 hover:shadow-indigo-500/50">
-        <h2 className="mb-6 text-3xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-pink-600">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-pink-300 via-purple-300 to-indigo-400">
+      <div className="w-96 p-8 bg-white/40 backdrop-blur-[2px] border border-white/50 rounded-2xl shadow-2xl transition-all duration-300 hover:shadow-2xl">
+        <h2 className="mb-6 text-3xl font-extrabold text-center text-white drop-shadow-md">
           Create Account
         </h2>
         
         {message && (
-          <div className={`mb-4 p-3 rounded-lg text-center text-sm font-medium ${
+          <div className={`mb-4 p-3 rounded-lg text-center text-sm font-medium border ${
             message.includes('successful') 
-              ? 'bg-green-100 text-green-700 border border-green-200' 
-              : 'bg-red-100 text-red-700 border border-red-200'
+              ? 'bg-green-100 text-green-700 border-green-200' 
+              : 'bg-red-100 text-red-700 border-red-200'
           }`}>
             {message}
           </div>
@@ -50,13 +50,13 @@ const Register: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block mb-2 text-sm font-bold text-gray-700" htmlFor="username">
+            <label className="block mb-2 text-sm font-bold text-white drop-shadow-sm" htmlFor="username">
               Username
             </label>
             <input
               type="text"
               id="username"
-              className="w-full px-4 py-3 leading-tight text-gray-700 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-200"
+              className="w-full px-4 py-3 leading-tight text-white bg-white/20 border border-white/40 rounded-lg focus:outline-none focus:bg-white/30 focus:ring-2 focus:ring-white/50 placeholder-white/70 transition-all duration-200 backdrop-blur-[2px]"
               placeholder="Enter your username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -64,13 +64,13 @@ const Register: React.FC = () => {
             />
           </div>
           <div>
-            <label className="block mb-2 text-sm font-bold text-gray-700" htmlFor="password">
+            <label className="block mb-2 text-sm font-bold text-white drop-shadow-sm" htmlFor="password">
               Password
             </label>
             <input
               type="password"
               id="password"
-              className="w-full px-4 py-3 leading-tight text-gray-700 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-200"
+              className="w-full px-4 py-3 leading-tight text-white bg-white/20 border border-white/40 rounded-lg focus:outline-none focus:bg-white/30 focus:ring-2 focus:ring-white/50 placeholder-white/70 transition-all duration-200 backdrop-blur-[2px]"
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -78,18 +78,20 @@ const Register: React.FC = () => {
             />
           </div>
           <button
-            className="w-full px-4 py-3 font-bold text-white uppercase tracking-wider bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg shadow-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transform hover:-translate-y-0.5 transition-all duration-200"
+            className="w-full px-4 py-3 font-bold text-indigo-900 uppercase tracking-wider bg-white/60 hover:bg-white/80 rounded-lg shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 backdrop-blur-[2px]"
             type="submit"
           >
             Sign Up
           </button>
           
           <div className="text-center mt-4">
-             <p className="text-sm text-gray-600">
+             <p className="text-sm text-white/90">
                Already have an account?{' '}
                <span 
                  onClick={() => navigate('/login')}
-                 className="font-bold text-indigo-600 hover:text-indigo-800 cursor-pointer hover:underline transition-colors"
+                 className="font-bold text-white hover:text-white/80 cursor-pointer hover:underline transition-colors"
+                 role="button"
+                 tabIndex={0}
                >
                  Log In
                </span>
