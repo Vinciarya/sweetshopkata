@@ -1,35 +1,16 @@
 // Import necessary tools to build the website server and handle configuration
-import express from 'express';
 import dotenv from 'dotenv';
-// Import the function to prepare the place where user information is stored
-import { createUserTable } from './models/user.model';
-import authRoutes from './routes/auth.routes';
-
-import cors from 'cors';
+import { app } from './app';
 
 // Load settings from the configuration file (like passwords and addresses)
 dotenv.config();
 
-// Create the main application (the "brain" of the website)
-export const app = express();
 // Decide which "door" (port) the website will open on. If not specified, use door 3000.
 const port = process.env.APP_PORT || 3000;
-
-// Enable CORS for all routes
-app.use(cors());
-
-// Middleware to parse JSON bodies
-app.use(express.json());
-
-// Register Routes
-app.use('/api/auth', authRoutes);
 
 // Function to start the website server
 const startServer = async () => {
     try {
-        // First, make sure the "filing cabinet" for users is ready
-        await createUserTable();
-
         // Start listening for visitors on the specified door
         app.listen(port, () => {
             console.log(`Server is running and listening on port ${port}`);
