@@ -1,7 +1,7 @@
 <div align="center">
   <br />
   <a href="https://sweetshopkata.vercel.app" target="_blank">
-    <img src="frontend/public/image.png" alt="Sweet Shop Logo" width="200" />
+    <img src="frontend/public/image.png" alt="Sweet Shop Logo" width="600" />
   </a>
   <br />
 
