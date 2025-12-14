@@ -7,8 +7,25 @@ import sweetRoutes from './routes/sweet.routes';
 
 export const app = express();
 
-// Enable CORS for all routes
-app.use(cors());
+// Define allowed origins
+const allowedOrigins = [
+    'http://localhost:5173',                   // Your local frontend
+    'https://sweetshopkata.vercel.app'         // ⚠️ CHANGE THIS to your actual Vercel URL!
+];
+
+// Configure CORS
+app.use(cors({
+    origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
+    credentials: true
+}));
 
 // Debug Middleware
 app.use((req, res, next) => {
