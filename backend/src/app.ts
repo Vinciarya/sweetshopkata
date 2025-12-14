@@ -9,8 +9,10 @@ export const app = express();
 
 // Define allowed origins
 const allowedOrigins = [
-    'http://localhost:5173',                   // Your local frontend
-    'https://sweetshopkata.vercel.app'         // ⚠️ CHANGE THIS to your actual Vercel URL!
+    'http://localhost:5173',                  // Local development
+  'http://localhost:3000',                  // Alternative local
+  'https://sweetshopkata.vercel.app',       // Your Vercel App
+  'https://sweetshopkata.vercel.app/',         // ⚠️ CHANGE THIS to your actual Vercel URL!
 ];
 
 // Configure CORS
