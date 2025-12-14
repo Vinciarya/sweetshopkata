@@ -4,11 +4,15 @@ import { login } from '../services/auth';
 import { isAxiosError } from 'axios';
 
 const Login = () => {
+  // Local state for form inputs and error handling
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  // Effect: Check if user is already logged in
+  // If a token exists, redirect them to the home page immediately.
+  // We use { replace: true } to prevent them from going back to the login page.
   React.useEffect(() => {
     if (localStorage.getItem('token')) {
       navigate('/', { replace: true });

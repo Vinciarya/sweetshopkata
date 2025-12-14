@@ -5,6 +5,7 @@ import { isAxiosError } from 'axios';
 
 
 const Register: React.FC = () => {
+  // Local state for user input and feedback messages
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');

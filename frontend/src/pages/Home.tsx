@@ -21,6 +21,10 @@ const Home = () => {
 const HomeContent = () => {
   const navigate = useNavigate();
   const { addToast } = useToast();
+  
+  // Custom Hook: useSweets
+  // Manages all the logic for fetching, filtering, and modifying sweets data.
+  // This separates the UI (view) from the Business Logic.
   const { 
     sweets, 
     loading, 
@@ -39,7 +43,9 @@ const HomeContent = () => {
   // Search State
   const [searchQuery, setSearchQuery] = useState(filters.name || '');
 
-  // Debounce Search
+  // Effect: Debounce Search
+  // Delays the actual filter update until the user stops typing for 500ms.
+  // This prevents making too many API calls or re-renders while typing.
   useEffect(() => {
     const timer = setTimeout(() => {
       setFilters(prev => ({ ...prev, name: searchQuery }));
@@ -66,7 +72,9 @@ const HomeContent = () => {
     sweet: null
   });
 
-  // Auth Check
+  // Effect: Auth Check
+  // Ensures that only authenticated users can access the dashboard.
+  // Redirects to /login if no token is found.
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -109,7 +117,8 @@ const HomeContent = () => {
       }
   };
 
-  // Admin Handlers
+  // Admin Handler: Save (Create/Update)
+  // Decides whether to create a new sweet or update an existing one based on modal state.
   const handleAdminSave = async (data: any) => {
       try {
           if (adminModal.sweet) {

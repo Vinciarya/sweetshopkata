@@ -1,5 +1,6 @@
 import pool from '../config/database';
 
+// Interface defining the Sweet object structure in the application
 export interface ISweet {
   id: number;
   name: string;
@@ -9,6 +10,7 @@ export interface ISweet {
   image_url?: string;
 }
 
+// Create the 'sweets' table in the database if it doesn't already exist
 export const createSweetTable = async () => {
   const query = `
     CREATE TABLE IF NOT EXISTS sweets (
@@ -28,6 +30,7 @@ export const createSweetTable = async () => {
   }
 };
 
+// Insert a new sweet into the database
 export const createSweet = async (sweet: Omit<ISweet, 'id'>): Promise<ISweet> => {
   const { name, price, quantity, category, image_url } = sweet;
   const result = await pool.query(
@@ -37,16 +40,19 @@ export const createSweet = async (sweet: Omit<ISweet, 'id'>): Promise<ISweet> =>
   return result.rows[0];
 };
 
+// Retrieve all sweets, ordered by ID
 export const findAllSweets = async (): Promise<ISweet[]> => {
   const result = await pool.query('SELECT * FROM sweets ORDER BY id ASC');
   return result.rows;
 };
 
+// Find a single sweet by its numeric ID
 export const findSweetById = async (id: number): Promise<ISweet | null> => {
   const result = await pool.query('SELECT * FROM sweets WHERE id = $1', [id]);
   return result.rows.length ? result.rows[0] : null;
 };
 
+// Update specific fields of a sweet dynamically
 export const updateSweet = async (id: number, sweet: Partial<ISweet>): Promise<ISweet | null> => {
   const fields = Object.keys(sweet).map((key, i) => `${key} = $${i + 2}`).join(', ');
   if (!fields) return null;
@@ -59,6 +65,7 @@ export const updateSweet = async (id: number, sweet: Partial<ISweet>): Promise<I
   return result.rows.length ? result.rows[0] : null;
 };
 
+// Remove a sweet from the database
 export const deleteSweet = async (id: number): Promise<void> => {
   await pool.query('DELETE FROM sweets WHERE id = $1', [id]);
 };
@@ -70,6 +77,7 @@ export interface SearchFilters {
   maxPrice?: number;
 }
 
+// Advanced search with multiple optional filters (name, category, price)
 export const searchSweets = async (filters: SearchFilters): Promise<ISweet[]> => {
   let query = 'SELECT * FROM sweets WHERE 1=1';
   const values: any[] = [];
@@ -105,6 +113,7 @@ export const searchSweets = async (filters: SearchFilters): Promise<ISweet[]> =>
   return result.rows;
 };
 
+// Atomically update stock quantity (add or subtract)
 export const updateSweetStock = async (id: number, quantityChange: number): Promise<ISweet | null> => {
   const result = await pool.query(
     'UPDATE sweets SET quantity = quantity + $1 WHERE id = $2 RETURNING *',

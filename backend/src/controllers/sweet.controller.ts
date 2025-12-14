@@ -1,6 +1,11 @@
 import { Request, Response } from 'express';
 import * as sweetModel from '../models/sweet.model';
 
+/**
+ * Get all sweets
+ * @route GET /api/sweets
+ * Retrieves the full list of sweets from the database.
+ */
 export const getAllSweets = async (req: Request, res: Response) => {
     try {
         const sweets = await sweetModel.findAllSweets();
@@ -11,6 +16,11 @@ export const getAllSweets = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * Create a new sweet
+ * @route POST /api/sweets
+ * Admin only. Adds a new sweet item to the inventory.
+ */
 export const createSweet = async (req: Request, res: Response) => {
     try {
         const { imageUrl, ...sweetData } = req.body;
@@ -25,6 +35,11 @@ export const createSweet = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * Get sweet by ID
+ * @route GET /api/sweets/:id
+ * Retrieves details of a specific sweet. Check if it exists first.
+ */
 export const getSweetById = async (req: Request, res: Response) => {
     console.log('--- ENTERING getSweetById ---');
     console.log('Params:', req.params);
@@ -41,6 +56,11 @@ export const getSweetById = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * Update a sweet
+ * @route PUT /api/sweets/:id
+ * Admin only. Updates details (name, price, etc.) of a sweet.
+ */
 export const updateSweet = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
@@ -61,6 +81,11 @@ export const updateSweet = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * Delete a sweet
+ * @route DELETE /api/sweets/:id
+ * Admin only. Permanently removes a sweet from the database.
+ */
 export const deleteSweet = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
@@ -72,6 +97,11 @@ export const deleteSweet = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * Search sweets
+ * @route GET /api/sweets/search?q=...
+ * Filters sweets based on various criteria (name, category, price range).
+ */
 export const searchSweets = async (req: Request, res: Response) => {
     console.log('--- ENTERING searchSweets ---');
     console.log('Query:', req.query);
@@ -94,6 +124,11 @@ export const searchSweets = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * Purchase a sweet
+ * @route POST /api/sweets/:id/purchase
+ * Reduces the stock quantity of a sweet if sufficient stock exists.
+ */
 export const purchaseSweet = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
@@ -120,6 +155,11 @@ export const purchaseSweet = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * Restock a sweet
+ * @route POST /api/sweets/:id/restock
+ * Admin only. IDempotently adds stock to an existing sweet.
+ */
 export const restockSweet = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
